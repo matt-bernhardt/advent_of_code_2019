@@ -15,20 +15,22 @@ def lookupOp(code, position, data):
 	return func(code, position, data)
 
 def opAdd(code, position, data):
-	print('Adding')
 	one = data[data[position+1]]
 	two = data[data[position+2]]
 	result = one + two
+	print('Adding ' + str(one) + ' and ' + str(two) + ' to get ' + str(result))
+	print('Storing at position ' + str(data[position+3]))
 	data[data[position+3]] = result
 	code = data[position+4]
 	position = position + 4
 	return code, position, data
 
 def opMultiply(code, position, data):
-	print('Multiplying')
 	one = data[data[position+1]]
 	two = data[data[position+2]]
 	result = one * two
+	print('Multiplying ' + str(one) + ' and ' + str(two) + ' to get ' + str(result))
+	print('Storing at position ' + str(data[position+3]))
 	data[data[position+3]] = result
 	code = data[position+4]
 	position = position + 4
