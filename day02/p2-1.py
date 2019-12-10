@@ -22,7 +22,6 @@ def opAdd(code, position, data):
 	data[data[position+3]] = result
 	code = data[position+4]
 	position = position + 4
-	print('Result: ' + str(data))
 	return code, position, data
 
 def opMultiply(code, position, data):
