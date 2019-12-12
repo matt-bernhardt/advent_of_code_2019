@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 import sys
-
-def castToInt(string):
-	return int(string)
+from computer import computer
 
 def lookupOp(code, position, data):
 	status(code, position, data)
@@ -46,7 +44,7 @@ def readInputs(filename):
 		for line in file:
 			opcodes = line.split(',')
 	file.closed
-	return [castToInt(foo) for foo in opcodes]
+	return [int(foo) for foo in opcodes]
 
 def status(code, position, data):
 	print('Data: ' + str(data))
@@ -54,10 +52,9 @@ def status(code, position, data):
 	print('Code: ' + str(data[position]))
 	print('')
 
-if __name__ == "__main__":
-	print('Reading inputs...')
+def holding():
 	intCodes = readInputs(sys.argv[1])
-	thisPos = 0
+	thisPos = 0 #
 	thisCode = intCodes[thisPos]
 	print('')
 
@@ -75,3 +72,8 @@ if __name__ == "__main__":
 
 	print('--- Final status ---')
 	status(thisCode, thisPos, intCodes)
+
+if __name__ == "__main__":
+	c = computer()
+	c.load(sys.argv[1])
+	c.showStatus()
