@@ -40,6 +40,8 @@ class computer():
 		operations = {
 			1: self.opAdd,
 			2: self.opMultiply,
+			3: self.opInput,
+			4: self.opOutput,
 			99: self.opEnd
 		}
 		func = operations.get(
@@ -59,6 +61,12 @@ class computer():
 		self.memory[self.memory[self.position+3]] = result
 		self.position = self.position + 4
 
+	def opInput(self):
+		print('Getting input for position ' + str(self.memory[self.position+1]))
+		self.memory[self.memory[self.position+1]] = int(input('Provide your input: '))
+		self.position = self.position + 2
+
+
 	def opMultiply(self):
 		print('Multipling (instruction ' + str(self.instruction) + ')')
 		print('')
@@ -69,6 +77,12 @@ class computer():
 		print('Storing at position ' + str(self.memory[self.position+3]))
 		self.memory[self.memory[self.position+3]] = result
 		self.position = self.position + 4
+
+	def opOutput(self):
+		print('Printing output from position ' + str(self.memory[self.position+1]))
+		print('')
+		print('Output: ' + str(self.memory[self.memory[self.position+1]]))
+		self.position = self.position + 2
 
 	def opEnd(self):
 		print('Ending')
