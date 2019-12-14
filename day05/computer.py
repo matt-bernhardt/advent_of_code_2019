@@ -9,7 +9,14 @@ class computer():
 		print('Booting computer...')
 		self.memory = []
 		self.position = 0
+		# intcode is the entire first instruction, including parameter values.
+		self.intcode = -1
+		# instruction is the numeric instruction code only - the right two
+		# digits of intcode.
 		self.instruction = -1
+		# parameters have to do with whether each command's argument is
+		# specified in "position" or "immediate" mode.
+		self.parameters = ''
 		print('  ...boot complete\n')
 
 	def execute(self):
@@ -33,10 +40,30 @@ class computer():
 
 	def op(self):
 		# Lookup instruction
-		self.instruction = self.memory[self.position]
+		# The first parameter is the intcode, documented at:
+		# https://adventofcode.com/2019/day/5
+		self.intcode = str(self.memory[self.position])
+		self.instruction = int(self.intcode[-2:])
+		self.parameters = str(self.intcode[:-2])
+		# Parameters are:
+		# 0 (or empty) - positional mode - the argument refers to a memory location
+		# 1 - immediate mode - the argument is the number itself
+		# Parameters read right to left.
+		# 
+		# Example:
+		# ABCDE
+		#  1002
+		#
+		# DE - two-digit opcode,      02 == opcode 2 (multiply)
+		#  C - mode of 1st parameter,  0 == position mode
+		#  B - mode of 2nd parameter,  1 == immediate mode
+		#  A - mode of 3rd parameter,  0 == position mode,
+		#                                   omitted due to being a leading zero
 		# Quick status check
 		print('Position: ' + str(self.position))
-		print('Executing instruction: ' + str(self.instruction))		
+		print('Intcode: ' + str(self.intcode))
+		print('Instruction: ' + str(self.instruction))		
+		print('Parameters: ' + str(self.parameters))
 		operations = {
 			1: self.opAdd,
 			2: self.opMultiply,
@@ -64,8 +91,8 @@ class computer():
 	def opInput(self):
 		print('Getting input for position ' + str(self.memory[self.position+1]))
 		self.memory[self.memory[self.position+1]] = int(input('Provide your input: '))
+		print('')
 		self.position = self.position + 2
-
 
 	def opMultiply(self):
 		print('Multipling (instruction ' + str(self.instruction) + ')')
