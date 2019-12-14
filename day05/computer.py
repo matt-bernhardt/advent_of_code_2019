@@ -23,8 +23,8 @@ class computer():
 		# This kicks off the execution of the commands in memory.
 		self.showStatus()
 		while self.instruction != 99:
-			self.op()
 			print('--- Next execution ---')
+			self.op()
 		print('--- Final status ---')
 		self.showStatus()
 
@@ -60,10 +60,10 @@ class computer():
 		#  A - mode of 3rd parameter,  0 == position mode,
 		#                                   omitted due to being a leading zero
 		# Quick status check
-		print('Position: ' + str(self.position))
-		print('Intcode: ' + str(self.intcode))
-		print('Instruction: ' + str(self.instruction))		
-		print('Parameters: ' + str(self.parameters))
+		print('  Position: ' + str(self.position))
+		print('  Intcode: ' + str(self.intcode))
+		print('  Instruction: ' + str(self.instruction))
+		print('  Parameters: ' + str(self.parameters))
 		operations = {
 			1: self.opAdd,
 			2: self.opMultiply,
@@ -79,7 +79,6 @@ class computer():
 
 	def opAdd(self):
 		print('Adding (instruction ' + str(self.instruction) + ')')
-		print('')
 		one = self.memory[self.memory[self.position+1]]
 		two = self.memory[self.memory[self.position+2]]
 		result = one + two
@@ -87,16 +86,16 @@ class computer():
 		print('Storing at position ' + str(self.memory[self.position+3]))
 		self.memory[self.memory[self.position+3]] = result
 		self.position = self.position + 4
+		print('')
 
 	def opInput(self):
 		print('Getting input for position ' + str(self.memory[self.position+1]))
 		self.memory[self.memory[self.position+1]] = int(input('Provide your input: '))
-		print('')
 		self.position = self.position + 2
+		print('')
 
 	def opMultiply(self):
 		print('Multipling (instruction ' + str(self.instruction) + ')')
-		print('')
 		one = self.memory[self.memory[self.position+1]]
 		two = self.memory[self.memory[self.position+2]]
 		result = one * two
@@ -104,12 +103,13 @@ class computer():
 		print('Storing at position ' + str(self.memory[self.position+3]))
 		self.memory[self.memory[self.position+3]] = result
 		self.position = self.position + 4
+		print('')
 
 	def opOutput(self):
 		print('Printing output from position ' + str(self.memory[self.position+1]))
-		print('')
 		print('Output: ' + str(self.memory[self.memory[self.position+1]]))
 		self.position = self.position + 2
+		print('')
 
 	def opEnd(self):
 		print('Ending')
