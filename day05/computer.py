@@ -91,7 +91,7 @@ class computer():
 		print('Adding (instruction ' + str(self.instruction) + ')')
 		inputs = self.setInputs(2, self.position+1)
 		result = inputs[0] + inputs[1]
-		print('Adding ' + str(inputs[0]) + ' and ' + str(inputs[1]) + ' to get ' + str(result))
+		print('Adding ' + str(inputs[0]) + ' and ' + str(inputs[1]))
 		print('Storing at position ' + str(self.memory[self.position+3]))
 		self.memory[self.memory[self.position+3]] = result
 		self.position = self.position + 4
@@ -160,7 +160,7 @@ class computer():
 		print('Multipling (instruction ' + str(self.instruction) + ')')
 		inputs = self.setInputs(2, self.position+1)
 		result = inputs[0] * inputs[1]
-		print('Multiplying ' + str(inputs[0]) + ' and ' + str(inputs[1]) + ' to get ' + str(result))
+		print('Multiplying ' + str(inputs[0]) + ' and ' + str(inputs[1]))
 		print('Storing at position ' + str(self.memory[self.position+3]))
 		self.memory[self.memory[self.position+3]] = result
 		self.position = self.position + 4
