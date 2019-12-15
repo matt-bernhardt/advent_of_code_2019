@@ -71,11 +71,15 @@ class computer():
 			2: self.opMultiply,
 			3: self.opInput,
 			4: self.opOutput,
+			5: self.opJumpIfTrue,
+			6: self.opJumpIfFalse,
+			7: self.opLessThan,
+			8: self.opEquals,
 			99: self.opEnd
 		}
 		func = operations.get(
 			self.instruction,
-			lambda: 'Invalid operation'
+			'Invalid operation'
 		)
 		return func()
 
@@ -93,10 +97,59 @@ class computer():
 		self.position = self.position + 4
 		print('')
 
+	def opEquals(self):
+		# If the first parameter is equal to the second parameter, it stores 1
+		# in the position given by the third parameter. Otherwise, it stores 0.
+		print('Equals')
+		inputs = self.setInputs(3, self.position+1)
+		newValue = 1 if inputs[0] == inputs[1] else 0
+		self.memory[self.memory[self.position+3]] = newValue
+		self.position = self.position + 4
+		print('')
+
 	def opInput(self):
 		print('Getting input for position ' + str(self.memory[self.position+1]))
 		self.memory[self.memory[self.position+1]] = int(input('Provide your input: '))
 		self.position = self.position + 2
+		print('')
+
+	def opJumpIfFalse(self):
+		# If the first parameter is zero, it sets the instruction pointer to
+		# the value from the second parameter. Otherwise, it does nothing.
+		print('Jump If False')
+		inputs = self.setInputs(2, self.position+1)
+		print('Is ' + str(inputs[0]) + ' false?')
+		if inputs[0] == 0:
+			print('Yes, is false. Jumping...')
+			self.position = inputs[1]
+		else:
+			print('No, is not false. Moving to next instruction...')
+			self.position = self.position + 3
+		print('')
+
+	def opJumpIfTrue(self):
+		# If the first parameter is non-zero, it sets the instruction pointer
+		# to the value from the second parameter. Otherwise, it does nothing.
+		print('Jump If True')
+		inputs = self.setInputs(2, self.position+1)
+		print('Is ' + str(inputs[0]) + ' true?')
+		if inputs[0] != 0:
+			print('Yes, is true. Jumping...')
+			self.position = inputs[1]
+		else:
+			print('No, is not true. Moving to next instruction...')
+			self.position = self.position + 3
+		print('')
+
+	def opLessThan(self):
+		# If the first parameter is less than the second parameter, it stores
+		# 1 in the position given by the third parameter. Otherwise, it stores
+		# 0.
+		print('Less Than')
+		inputs = self.setInputs(3, self.position+1)
+		newValue = 1 if inputs[0] < inputs[1] else 0
+		self.memory[self.memory[self.position+3]] = newValue
+		self.position = self.position + 4
 		print('')
 
 	def opMultiply(self):
@@ -116,7 +169,9 @@ class computer():
 	def opOutput(self):
 		print('Printing output from position ' + str(self.memory[self.position+1]))
 		inputs = self.setInputs(1, self.position+1)
-		print('Output: ' + str(inputs[0]))
+		print('\n\n==>')
+		print('==> Output: ' + str(inputs[0]))
+		print('==>\n\n')
 		self.position = self.position + 2
 		print('')
 
@@ -133,7 +188,7 @@ class computer():
 				# Position mode
 				print('    Loading from position ' + str(self.memory[position+x]))
 				inputs.append(self.memory[self.memory[position+x]])
-			elif 1 == int(self.parameters[x]):
+			else:
 				# Immediate mode
 				print('    Setting input directly to ' + str(self.memory[position+x]))
 				inputs.append(self.memory[position+x])
