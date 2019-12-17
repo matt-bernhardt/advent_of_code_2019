@@ -1,10 +1,7 @@
 #!/usr/bin/python3
-from __future__ import absolute_import
 import itertools
 import sys
-from thing import thing
 from computer import computer
-# from ..day05 import computer
 
 def runTrial(digits):
 	print("Attempting: " + str(digits))
